@@ -13,6 +13,7 @@
   <xsl:include href="identAndStatusSection.xsl"/>
   <xsl:include href="inlineSignificantData.xsl"/>
   <xsl:include href="internalRef.xsl"/>
+  <xsl:include href="issueDate.xsl"/>
   <xsl:include href="levelledPara.xsl"/>
   <xsl:include href="lists.xsl"/>
   <xsl:include href="note.xsl"/>

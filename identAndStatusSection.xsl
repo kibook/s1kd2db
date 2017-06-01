@@ -9,9 +9,12 @@
       <date>
         <xsl:apply-templates select="dmAddress/dmAddressItems/issueDate"/>
       </date>
-      <!--<author>
+      <author>
+        <xsl:apply-templates select="dmStatus/originator"/>
+      </author>
+      <publisher>
         <xsl:apply-templates select="dmStatus/responsiblePartnerCompany"/>
-      </author>-->
+      </publisher>
     </info>
   </xsl:template>
 
