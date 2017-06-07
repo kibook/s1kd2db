@@ -12,19 +12,29 @@
         </xsl:call-template>
       </xsl:attribute>
       <xsl:choose>
-        <xsl:when test="@internalRefTargetType">   
-          <xsl:call-template name="target-title-by-type"/>
+        <xsl:when test="$target/shortName">
+          <xsl:apply-templates select="$target/shortName"/>
+        </xsl:when>
+        <xsl:when test="$target/name">
+          <xsl:apply-templates select="$target/name"/>
         </xsl:when>
         <xsl:otherwise>
-          <xsl:call-template name="target-title-by-element">
-            <xsl:with-param name="element" select="$target"/>
-          </xsl:call-template>
+          <xsl:choose>
+            <xsl:when test="@internalRefTargetType">   
+              <xsl:call-template name="target-title-by-type"/>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:call-template name="target-title-by-element">
+                <xsl:with-param name="element" select="$target"/>
+              </xsl:call-template>
+            </xsl:otherwise>
+          </xsl:choose>
+          <xsl:text> </xsl:text>
+          <xsl:for-each select="$target">
+            <xsl:number level="any" from="dmodule"/>
+          </xsl:for-each>
         </xsl:otherwise>
       </xsl:choose>
-      <xsl:text> </xsl:text>
-      <xsl:for-each select="$target">
-        <xsl:number level="multiple" from="dmodule"/>
-      </xsl:for-each>
     </link>
   </xsl:template>
 

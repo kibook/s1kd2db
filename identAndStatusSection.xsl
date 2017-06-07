@@ -3,9 +3,21 @@
   
   <xsl:template match="identAndStatusSection">
     <info>
-      <title>
-        <xsl:apply-templates select="dmAddress/dmAddressItems/dmTitle"/>
-      </title>
+      <xsl:choose>
+        <xsl:when test="$info-name-is-subtitle = 0">
+          <title>
+            <xsl:apply-templates select="dmAddress/dmAddressItems/dmTitle"/>
+          </title>
+        </xsl:when>
+        <xsl:otherwise>
+          <title>
+            <xsl:apply-templates select="dmAddress/dmAddressItems/dmTitle/techName"/>
+          </title>
+          <subtitle>
+            <xsl:apply-templates select="dmAddress/dmAddressItems/dmTitle/infoName"/>
+          </subtitle>
+        </xsl:otherwise>
+      </xsl:choose>
       <date>
         <xsl:apply-templates select="dmAddress/dmAddressItems/issueDate"/>
       </date>

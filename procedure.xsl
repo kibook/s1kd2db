@@ -2,16 +2,30 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
 
   <xsl:template match="procedure">
-    <task>
-      <xsl:apply-templates/>
-    </task>
+    <xsl:choose>
+      <xsl:when test="$use-procedure = 1">
+        <task>
+          <xsl:apply-templates/>
+        </task>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:apply-templates/>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
   <xsl:template match="preliminaryRqmts">
     <bridgehead>Preliminary requirements</bridgehead>
-    <taskprerequisites>
-      <xsl:apply-templates/>
-    </taskprerequisites>
+    <xsl:choose>
+      <xsl:when test="$use-procedure = 1">
+        <taskprerequisites>
+          <xsl:apply-templates/>
+        </taskprerequisites>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:apply-templates/>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
   <xsl:template match="reqCondGroup">
@@ -44,6 +58,23 @@
         <para/>
       </entry>
     </row>
+  </xsl:template>
+
+  <xsl:template match="reqCondNoRef">
+    <row>
+      <entry>
+        <xsl:apply-templates/>
+      </entry>
+      <entry>
+        <para/>
+      </entry>
+    </row>
+  </xsl:template>
+
+  <xsl:template match="reqCond">
+    <para>
+      <xsl:apply-templates/>
+    </para>
   </xsl:template>
 
   <xsl:template match="reqSupportEquips|reqSupplies|reqSpares">
@@ -96,29 +127,92 @@
     </row>
   </xsl:template>
 
+  <xsl:template match="supportEquipDescr">
+    <row>
+      <entry>
+        <para>
+          <xsl:call-template name="unique-id-attr"/>
+          <xsl:choose>
+            <xsl:when test="name">
+              <xsl:apply-templates select="name"/>
+            </xsl:when>
+            <xsl:when test="shortName">
+              <xsl:apply-templates select="shortName"/>
+            </xsl:when>
+          </xsl:choose>
+        </para>
+      </entry>
+      <entry>
+        <para>
+          <xsl:apply-templates select="identNumber"/>
+        </para>
+      </entry>
+      <entry>
+        <para>
+          <xsl:apply-templates select="reqQuantity"/>
+        </para>
+      </entry>
+      <entry>
+        <para>
+          <xsl:apply-templates select="remark"/>
+        </para>
+      </entry>
+    </row>
+  </xsl:template>
+
   <xsl:template match="mainProcedure">
     <bridgehead>Procedure</bridgehead>
-    <procedure>
-      <xsl:apply-templates/>
-    </procedure>
+    <xsl:choose>
+      <xsl:when test="$use-procedure = 1">
+        <procedure>
+          <xsl:apply-templates/>
+        </procedure>
+      </xsl:when>
+      <xsl:otherwise>
+        <orderedlist>
+          <xsl:apply-templates/>
+        </orderedlist>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
   <xsl:template match="proceduralStep">
-    <step>
-      <xsl:apply-templates select="*[not(self::proceduralStep)]"/>
-      <xsl:if test="proceduralStep">
-        <substeps>
-          <xsl:apply-templates select="proceduralStep"/>
-        </substeps>
-      </xsl:if>
-    </step>
+    <xsl:choose>
+      <xsl:when test="$use-procedure = 1">
+        <step>
+          <xsl:apply-templates select="*[not(self::proceduralStep)]"/>
+          <xsl:if test="proceduralStep">
+            <substeps>
+              <xsl:apply-templates select="proceduralStep"/>
+            </substeps>
+          </xsl:if>
+        </step>
+      </xsl:when>
+      <xsl:otherwise>
+        <listitem>
+          <xsl:apply-templates select="*[not(self::proceduralStep)]"/>
+          <xsl:if test="proceduralStep">
+            <orderedlist>
+              <xsl:apply-templates select="proceduralStep"/>
+            </orderedlist>
+          </xsl:if>
+        </listitem>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
   <xsl:template match="closeRqmts">
     <bridgehead>Requirements after job completion</bridgehead>
-    <taskrelated>
-      <xsl:apply-templates/>
-    </taskrelated>
+    <xsl:choose>
+      <xsl:when test="$use-procedure = 1">
+        <taskrelated>
+          <xsl:apply-templates/>
+        </taskrelated>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:apply-templates/>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
 </xsl:stylesheet>
