@@ -9,6 +9,8 @@
        use orderedlists for steps -->
   <xsl:param name="use-procedure">1</xsl:param>
 
+  <xsl:param name="procedure-sections">1</xsl:param>
+
   <xsl:include href="includes.xsl"/>
 
   <xsl:output method="xml"/>

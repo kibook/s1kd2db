@@ -2,30 +2,18 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
 
   <xsl:template match="procedure">
-    <xsl:choose>
-      <xsl:when test="$use-procedure = 1">
-        <task>
-          <xsl:apply-templates/>
-        </task>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:apply-templates/>
-      </xsl:otherwise>
-    </xsl:choose>
+    <task>
+      <xsl:apply-templates/>
+    </task>
   </xsl:template>
 
   <xsl:template match="preliminaryRqmts">
-    <bridgehead>Preliminary requirements</bridgehead>
-    <xsl:choose>
-      <xsl:when test="$use-procedure = 1">
-        <taskprerequisites>
-          <xsl:apply-templates/>
-        </taskprerequisites>
-      </xsl:when>
-      <xsl:otherwise>
+    <section>
+      <title>Preliminary requirements</title>
+      <taskprerequisites>
         <xsl:apply-templates/>
-      </xsl:otherwise>
-    </xsl:choose>
+      </taskprerequisites>
+    </section>
   </xsl:template>
 
   <xsl:template match="reqCondGroup">
@@ -161,19 +149,21 @@
   </xsl:template>
 
   <xsl:template match="mainProcedure">
-    <bridgehead>Procedure</bridgehead>
-    <xsl:choose>
-      <xsl:when test="$use-procedure = 1">
-        <procedure>
-          <xsl:apply-templates/>
-        </procedure>
-      </xsl:when>
-      <xsl:otherwise>
-        <orderedlist>
-          <xsl:apply-templates/>
-        </orderedlist>
-      </xsl:otherwise>
-    </xsl:choose>
+    <section>
+      <title>Procedure</title>
+      <xsl:choose>
+        <xsl:when test="$use-procedure = 1">
+          <procedure>
+            <xsl:apply-templates/>
+          </procedure>
+        </xsl:when>
+        <xsl:otherwise>
+          <orderedlist>
+            <xsl:apply-templates/>
+          </orderedlist>
+        </xsl:otherwise>
+      </xsl:choose>
+    </section>
   </xsl:template>
 
   <xsl:template match="proceduralStep">
@@ -202,17 +192,12 @@
   </xsl:template>
 
   <xsl:template match="closeRqmts">
-    <bridgehead>Requirements after job completion</bridgehead>
-    <xsl:choose>
-      <xsl:when test="$use-procedure = 1">
-        <taskrelated>
-          <xsl:apply-templates/>
-        </taskrelated>
-      </xsl:when>
-      <xsl:otherwise>
+    <section>
+      <title>Requirements after job completion</title>
+      <taskrelated>
         <xsl:apply-templates/>
-      </xsl:otherwise>
-    </xsl:choose>
+      </taskrelated>
+    </section>
   </xsl:template>
 
 </xsl:stylesheet>
