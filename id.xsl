@@ -3,6 +3,7 @@
 
   <xsl:template name="unique-id">
     <xsl:param name="id" select="@id"/>
+    <xsl:text>ID_</xsl:text>
     <xsl:apply-templates select="ancestor::dmodule/identAndStatusSection/dmAddress/dmIdent"/>
     <xsl:text>_</xsl:text>
     <xsl:value-of select="$id"/>
