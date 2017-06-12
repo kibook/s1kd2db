@@ -10,9 +10,31 @@
   <xsl:template match="graphic">
     <mediaobject>
       <imageobject>
-        <imagedata fileref=""/>
+        <imagedata>
+          <xsl:apply-templates select="@*"/>
+        </imagedata>
       </imageobject>
     </mediaobject>
+  </xsl:template>
+
+  <xsl:template match="@infoEntityIdent">
+    <xsl:attribute name="fileref">
+      <xsl:value-of select="unparsed-entity-uri(.)"/>
+    </xsl:attribute>
+  </xsl:template>
+
+  <xsl:template match="@reproductionWidth">
+    <xsl:attribute name="width">
+      <xsl:value-of select="."/>
+    </xsl:attribute>
+  </xsl:template>
+
+  <xsl:template match="@reproductionHeight"/>
+
+  <xsl:template match="@reproductionScale">
+    <xsl:attribute name="scale">
+      <xsl:value-of select="."/>
+    </xsl:attribute>
   </xsl:template>
 
 </xsl:stylesheet>
