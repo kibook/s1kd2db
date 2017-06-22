@@ -122,7 +122,7 @@
     <d:row>
       <d:entry>
         <d:para>
-          <xsl:call-template name="unique-id-attr"/>
+          <xsl:call-template name="unique.id.attr"/>
           <xsl:choose>
             <xsl:when test="name">
               <xsl:apply-templates select="name"/>

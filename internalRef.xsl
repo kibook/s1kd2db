@@ -10,7 +10,7 @@
     <xsl:variable name="target-type" select="@internalRefTargetType"/>
     <d:link>
       <xsl:attribute name="linkend">
-        <xsl:call-template name="unique-id">
+        <xsl:call-template name="unique.id">
           <xsl:with-param name="id" select="$target-id"/>
         </xsl:call-template>
       </xsl:attribute>

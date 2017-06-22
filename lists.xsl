@@ -18,6 +18,7 @@
 
   <xsl:template match="listItem">
     <d:listitem>
+      <xsl:call-template name="unique.id.attr"/>
       <xsl:apply-templates/>
     </d:listitem>
   </xsl:template>

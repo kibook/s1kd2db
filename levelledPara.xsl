@@ -6,7 +6,7 @@
 
   <xsl:template match="levelledPara">
     <d:section>
-      <xsl:call-template name="unique-id-attr"/>
+      <xsl:call-template name="unique.id.attr"/>
       <xsl:apply-templates/>
     </d:section>
   </xsl:template>
