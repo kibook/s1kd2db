@@ -1,124 +1,127 @@
 <?xml version="1.0"?>
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+<xsl:stylesheet
+  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+  xmlns:d="http://docbook.org/ns/docbook"
+  version="1.0">
 
   <xsl:template match="procedure">
-    <task>
+    <d:task>
       <xsl:apply-templates/>
-    </task>
+    </d:task>
   </xsl:template>
 
   <xsl:template match="preliminaryRqmts">
-    <section>
-      <title>Preliminary requirements</title>
-      <taskprerequisites>
+    <d:section>
+      <d:title>Preliminary requirements</d:title>
+      <d:taskprerequisites>
         <xsl:apply-templates/>
-      </taskprerequisites>
-    </section>
+      </d:taskprerequisites>
+    </d:section>
   </xsl:template>
 
   <xsl:template match="reqCondGroup">
-    <table>
-      <title>Required conditions</title>
-      <tgroup cols="2">
-        <thead>
-          <row>
-            <entry>
-              <para>Action/Condition</para>
-            </entry>
-            <entry>
-              <para>Data module/Technical publication</para>
-            </entry>
-          </row>
-        </thead>
-        <tbody>
+    <d:table>
+      <d:title>Required conditions</d:title>
+      <d:tgroup cols="2">
+        <d:thead>
+          <d:row>
+            <d:entry>
+              <d:para>Action/Condition</d:para>
+            </d:entry>
+            <d:entry>
+              <d:para>Data module/Technical publication</d:para>
+            </d:entry>
+          </d:row>
+        </d:thead>
+        <d:tbody>
           <xsl:apply-templates/>
-        </tbody>
-      </tgroup>
-    </table>
+        </d:tbody>
+      </d:tgroup>
+    </d:table>
   </xsl:template>
 
   <xsl:template match="noConds">
-    <row>
-      <entry>
-        <para>None</para>
-      </entry>
-      <entry>
-        <para/>
-      </entry>
-    </row>
+    <d:row>
+      <d:entry>
+        <d:para>None</d:para>
+      </d:entry>
+      <d:entry>
+        <d:para/>
+      </d:entry>
+    </d:row>
   </xsl:template>
 
   <xsl:template match="reqCondNoRef">
-    <row>
-      <entry>
+    <d:row>
+      <d:entry>
         <xsl:apply-templates/>
-      </entry>
-      <entry>
-        <para/>
-      </entry>
-    </row>
+      </d:entry>
+      <d:entry>
+        <d:para/>
+      </d:entry>
+    </d:row>
   </xsl:template>
 
   <xsl:template match="reqCond">
-    <para>
+    <d:para>
       <xsl:apply-templates/>
-    </para>
+    </d:para>
   </xsl:template>
 
   <xsl:template match="reqSupportEquips|reqSupplies|reqSpares">
-    <table>
-      <title>
+    <d:table>
+      <d:title>
         <xsl:choose>
           <xsl:when test="self::reqSupportEquips">Support equipment</xsl:when>
           <xsl:when test="self::reqSupplies">Consumables, materials, and expendables</xsl:when>
           <xsl:when test="self::reqSpares">Spares</xsl:when>
         </xsl:choose>
-      </title>
-      <tgroup cols="4">
-        <thead>
-          <row>
-            <entry>
-              <para>Name/Alternate name</para>
-            </entry>
-            <entry>
-              <para>Identification/Reference</para>
-            </entry>
-            <entry>
-              <para>Quantity</para>
-            </entry>
-            <entry>
-              <para>Remark</para>
-            </entry>
-          </row>
-        </thead>
-        <tbody>
+      </d:title>
+      <d:tgroup cols="4">
+        <d:thead>
+          <d:row>
+            <d:entry>
+              <d:para>Name/Alternate name</d:para>
+            </d:entry>
+            <d:entry>
+              <d:para>Identification/Reference</d:para>
+            </d:entry>
+            <d:entry>
+              <d:para>Quantity</d:para>
+            </d:entry>
+            <d:entry>
+              <d:para>Remark</d:para>
+            </d:entry>
+          </d:row>
+        </d:thead>
+        <d:tbody>
           <xsl:apply-templates/>
-        </tbody>
-      </tgroup>
-    </table>
+        </d:tbody>
+      </d:tgroup>
+    </d:table>
   </xsl:template>
 
   <xsl:template match="noSupportEquips|noSupplies|noSpares">
-    <row>
-      <entry>
-        <para>None</para>
-      </entry>
-      <entry>
-        <para/>
-      </entry>
-      <entry>
-        <para/>
-      </entry>
-      <entry>
-        <para/>
-      </entry>
-    </row>
+    <d:row>
+      <d:entry>
+        <d:para>None</d:para>
+      </d:entry>
+      <d:entry>
+        <d:para/>
+      </d:entry>
+      <d:entry>
+        <d:para/>
+      </d:entry>
+      <d:entry>
+        <d:para/>
+      </d:entry>
+    </d:row>
   </xsl:template>
 
   <xsl:template match="supportEquipDescr">
-    <row>
-      <entry>
-        <para>
+    <d:row>
+      <d:entry>
+        <d:para>
           <xsl:call-template name="unique-id-attr"/>
           <xsl:choose>
             <xsl:when test="name">
@@ -128,76 +131,76 @@
               <xsl:apply-templates select="shortName"/>
             </xsl:when>
           </xsl:choose>
-        </para>
-      </entry>
-      <entry>
-        <para>
+        </d:para>
+      </d:entry>
+      <d:entry>
+        <d:para>
           <xsl:apply-templates select="identNumber"/>
-        </para>
-      </entry>
-      <entry>
-        <para>
+        </d:para>
+      </d:entry>
+      <d:entry>
+        <d:para>
           <xsl:apply-templates select="reqQuantity"/>
-        </para>
-      </entry>
-      <entry>
-        <para>
+        </d:para>
+      </d:entry>
+      <d:entry>
+        <d:para>
           <xsl:apply-templates select="remark"/>
-        </para>
-      </entry>
-    </row>
+        </d:para>
+      </d:entry>
+    </d:row>
   </xsl:template>
 
   <xsl:template match="mainProcedure">
-    <section>
-      <title>Procedure</title>
+    <d:section>
+      <d:title>Procedure</d:title>
       <xsl:choose>
-        <xsl:when test="$use-procedure = 1">
-          <procedure>
+        <xsl:when test="$use.procedure = 1">
+          <d:procedure>
             <xsl:apply-templates/>
-          </procedure>
+          </d:procedure>
         </xsl:when>
         <xsl:otherwise>
-          <orderedlist>
+          <d:orderedlist>
             <xsl:apply-templates/>
-          </orderedlist>
+          </d:orderedlist>
         </xsl:otherwise>
       </xsl:choose>
-    </section>
+    </d:section>
   </xsl:template>
 
   <xsl:template match="proceduralStep">
     <xsl:choose>
-      <xsl:when test="$use-procedure = 1">
-        <step>
+      <xsl:when test="$use.procedure = 1">
+        <d:step>
           <xsl:apply-templates select="*[not(self::proceduralStep)]"/>
           <xsl:if test="proceduralStep">
-            <substeps>
+            <d:substeps>
               <xsl:apply-templates select="proceduralStep"/>
-            </substeps>
+            </d:substeps>
           </xsl:if>
-        </step>
+        </d:step>
       </xsl:when>
       <xsl:otherwise>
-        <listitem>
+        <d:listitem>
           <xsl:apply-templates select="*[not(self::proceduralStep)]"/>
           <xsl:if test="proceduralStep">
-            <orderedlist>
+            <d:orderedlist>
               <xsl:apply-templates select="proceduralStep"/>
-            </orderedlist>
+            </d:orderedlist>
           </xsl:if>
-        </listitem>
+        </d:listitem>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
 
   <xsl:template match="closeRqmts">
-    <section>
-      <title>Requirements after job completion</title>
-      <taskrelated>
+    <d:section>
+      <d:title>Requirements after job completion</d:title>
+      <d:taskrelated>
         <xsl:apply-templates/>
-      </taskrelated>
-    </section>
+      </d:taskrelated>
+    </d:section>
   </xsl:template>
 
 </xsl:stylesheet>

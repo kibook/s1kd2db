@@ -1,18 +1,37 @@
 <?xml version="1.0"?>
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+<xsl:stylesheet
+  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+  xmlns:d="http://docbook.org/ns/docbook"
+  version="1.0">
 
+  <!-- S1000D allows certain elements after <levelledPara>, but DocBook 5
+       requires sections to be terminal (can only be followed by other
+       sections). -->
   <xsl:template match="table">
-    <table>
-      <xsl:copy-of select="@*"/>
-      <xsl:apply-templates/>
-    </table>
+    <xsl:choose>
+      <xsl:when test="ancestor::levelledPara">   
+        <d:table>
+          <xsl:copy-of select="@*"/>
+          <xsl:apply-templates/>
+        </d:table>
+      </xsl:when>
+      <xsl:otherwise>
+        <d:simplesect>
+          <d:title/>
+          <d:table>
+            <xsl:copy-of select="@*"/>
+            <xsl:apply-templates/>
+          </d:table>
+        </d:simplesect>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
   <xsl:template match="tgroup">
-    <tgroup>
+    <d:tgroup>
       <xsl:copy-of select="@*"/>
       <xsl:apply-templates/>
-    </tgroup>
+    </d:tgroup>
   </xsl:template>
 
   <xsl:template match="colspec">
@@ -22,31 +41,32 @@
   </xsl:template>
 
   <xsl:template match="thead">
-    <thead>
+    <d:thead>
       <xsl:copy-of select="@*"/>
       <xsl:apply-templates/>
-    </thead>
+    </d:thead>
   </xsl:template>
 
   <xsl:template match="tbody">
-    <tbody>
+    <d:tbody>
       <xsl:copy-of select="@*"/>
       <xsl:apply-templates/>
-    </tbody>
+    </d:tbody>
   </xsl:template>
 
   <xsl:template match="row">
-    <row>
+    <d:row>
       <xsl:copy-of select="@*"/>
       <xsl:apply-templates/>
-    </row>
+    </d:row>
   </xsl:template>
 
   <xsl:template match="entry">
-    <entry>
-      <xsl:copy-of select="@*"/>
+    <d:entry>
+      <xsl:copy-of select="@align"/>
+      <xsl:copy-of select="@colsep"/>
       <xsl:apply-templates/>
-    </entry>
+    </d:entry>
   </xsl:template>
 
 </xsl:stylesheet>

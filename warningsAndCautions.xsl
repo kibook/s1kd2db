@@ -1,22 +1,25 @@
 <?xml version="1.0"?>
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+<xsl:stylesheet
+  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+  xmlns:d="http://docbook.org/ns/docbook"
+  version="1.0">
 
   <xsl:template match="caution">
-    <caution>
+    <d:caution>
       <xsl:apply-templates/>
-    </caution>
+    </d:caution>
   </xsl:template>
 
   <xsl:template match="warning">
-    <warning>
+    <d:warning>
       <xsl:apply-templates/>
-    </warning>
+    </d:warning>
   </xsl:template>
 
   <xsl:template match="warningAndCautionPara">
-    <para>
+    <d:para>
       <xsl:apply-templates/>
-    </para>
+    </d:para>
   </xsl:template>
 
 </xsl:stylesheet>

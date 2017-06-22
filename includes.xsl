@@ -12,7 +12,6 @@
   <xsl:include href="figure.xsl"/>
   <xsl:include href="id.xsl"/>
   <xsl:include href="identAndStatusSection.xsl"/>
-  <xsl:include href="inlineSignificantData.xsl"/>
   <xsl:include href="internalRef.xsl"/>
   <xsl:include href="issueDate.xsl"/>
   <xsl:include href="levelledPara.xsl"/>
@@ -20,8 +19,10 @@
   <xsl:include href="note.xsl"/>
   <xsl:include href="para.xsl"/>
   <xsl:include href="procedure.xsl"/>
+  <xsl:include href="pub.xsl"/>
   <xsl:include href="referencedApplicGroup.xsl"/>
   <xsl:include href="refs.xsl"/>
+  <xsl:include href="responsiblePartnerCompany.xsl"/>
   <xsl:include href="table.xsl"/>
   <xsl:include href="title.xsl"/>
   <xsl:include href="verbatimText.xsl"/>

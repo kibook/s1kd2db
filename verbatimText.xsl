@@ -1,28 +1,31 @@
 <?xml version="1.0"?>
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+<xsl:stylesheet
+  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+  xmlns:d="http://docbook.org/ns/docbook"
+  version="1.0">
 
   <xsl:template match="verbatimText">
-    <literal>
+    <d:literal>
       <xsl:apply-templates/>
-    </literal>
+    </d:literal>
   </xsl:template>
 
   <xsl:template match="verbatimText[@verbatimStyle = 'vs11']">
-    <programlisting>
+    <d:programlisting>
       <xsl:apply-templates/>
-    </programlisting>
+    </d:programlisting>
   </xsl:template>
 
   <xsl:template match="verbatimText[@verbatimStyle = 'vs23']">
-    <screen>
+    <d:screen>
       <xsl:apply-templates/>
-    </screen>
+    </d:screen>
   </xsl:template>
 
   <xsl:template match="verbatimText[@verbatimStyle = 'vs24']">
-    <programlisting>
+    <d:programlisting>
       <xsl:apply-templates/>
-    </programlisting>
+    </d:programlisting>
   </xsl:template>
 
 </xsl:stylesheet>

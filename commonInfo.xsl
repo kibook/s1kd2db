@@ -1,19 +1,22 @@
 <?xml version="1.0"?>
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+<xsl:stylesheet
+  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+  xmlns:d="http://docbook.org/ns/docbook"
+  version="1.0">
 
   <xsl:template match="commonInfo">
-    <section>
-      <title>Common information</title>
-      <tasksummary>
+    <d:section>
+      <d:title>Common information</d:title>
+      <d:tasksummary>
         <xsl:apply-templates/>
-      </tasksummary>
-    </section>
+      </d:tasksummary>
+    </d:section>
   </xsl:template>
 
   <xsl:template match="commonInfoDescrPara">
-    <formalpara>
+    <d:formalpara>
       <xsl:apply-templates/>
-    </formalpara>
+    </d:formalpara>
   </xsl:template>
 
 </xsl:stylesheet>

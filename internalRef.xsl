@@ -1,11 +1,14 @@
 <?xml version="1.0"?>
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+<xsl:stylesheet
+  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+  xmlns:d="http://docbook.org/ns/docbook"
+  version="1.0">
 
   <xsl:template match="internalRef">
     <xsl:variable name="target-id" select="@internalRefId"/>
     <xsl:variable name="target" select="//*[@id = $target-id]"/>
     <xsl:variable name="target-type" select="@internalRefTargetType"/>
-    <link>
+    <d:link>
       <xsl:attribute name="linkend">
         <xsl:call-template name="unique-id">
           <xsl:with-param name="id" select="$target-id"/>
@@ -35,7 +38,7 @@
           </xsl:for-each>
         </xsl:otherwise>
       </xsl:choose>
-    </link>
+    </d:link>
   </xsl:template>
 
   <xsl:template name="target-title-by-type">
