@@ -4,9 +4,11 @@
   <xsl:template name="unique.id">
     <xsl:param name="id" select="@id"/>
     <xsl:text>ID_</xsl:text>
-    <xsl:apply-templates select="ancestor::dmodule/identAndStatusSection/dmAddress/dmIdent"/>
-    <xsl:text>_</xsl:text>
-    <xsl:value-of select="$id"/>
+    <xsl:apply-templates select="ancestor-or-self::dmodule/identAndStatusSection/dmAddress/dmIdent"/>
+    <xsl:if test="$id">
+      <xsl:text>_</xsl:text>
+      <xsl:value-of select="$id"/>
+    </xsl:if>
   </xsl:template>
 
   <xsl:template name="unique.id.attr">

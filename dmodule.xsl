@@ -6,6 +6,9 @@
 
   <xsl:template match="dmodule">
     <xsl:element name="{$dmodule.is}">
+      <xsl:attribute name="id">
+        <xsl:call-template name="unique.id"/>
+      </xsl:attribute>
       <xsl:apply-templates select="*"/>
     </xsl:element>
   </xsl:template>
