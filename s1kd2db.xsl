@@ -52,7 +52,7 @@
                 target has no title, S1000D link text is used instead.
   -->
 
-  <xsl:param name="link.text">endterm</xsl:param>
+  <xsl:param name="link.text">title</xsl:param>
 
   <xsl:include href="includes.xsl"/>
 
