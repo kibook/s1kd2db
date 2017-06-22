@@ -37,11 +37,24 @@
 
   <xsl:template match="pmEntry">
     <xsl:choose>
-      <xsl:when test="$use.pmentry = 0">
+      <!-- Don't add a level if pmEntry is ignored, or it is a child pmEntry
+           but no value for the sub.pmentry.is parameter was set (pmentry.is
+           default is <part> which cannot be nested). -->
+      <xsl:when test="$use.pmentry = 0 or (parent::pmEntry and not ($sub.pmentry.is))">
         <xsl:apply-templates select="pmEntry|dmRef"/>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:element name="{$pmentry.is}">
+        <xsl:variable name="name">
+          <xsl:choose>
+            <xsl:when test="parent::pmEntry and $sub.pmentry.is">
+              <xsl:value-of select="$sub.pmentry.is"/>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:value-of select="$pmentry.is"/>
+            </xsl:otherwise>
+          </xsl:choose>
+        </xsl:variable>
+        <xsl:element name="{$name}">
           <xsl:choose>
             <xsl:when test="$pmentry.db.titlereq.info = 0">
               <xsl:apply-templates select="pmEntryTitle"/>

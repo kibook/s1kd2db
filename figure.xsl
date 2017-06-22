@@ -13,31 +13,20 @@
   <xsl:template match="graphic">
     <d:mediaobject>
       <d:imageobject>
-        <d:imagedata>
-          <xsl:apply-templates select="@*"/>
+        <d:imagedata fileref="{unparsed-entity-uri(@infoEntityIdent)}">
+          <xsl:if test="@reproductionWidth">
+            <xsl:attribute name="width">
+              <xsl:value-of select="@reproductionWidth"/>
+            </xsl:attribute>
+          </xsl:if>
+          <xsl:if test="@reproductionScale">
+            <xsl:attribute name="scale">
+              <xsl:value-of select="@reproductionScale"/>
+            </xsl:attribute>
+          </xsl:if>
         </d:imagedata>
       </d:imageobject>
     </d:mediaobject>
-  </xsl:template>
-
-  <xsl:template match="@infoEntityIdent">
-    <xsl:attribute name="fileref">
-      <xsl:value-of select="unparsed-entity-uri(.)"/>
-    </xsl:attribute>
-  </xsl:template>
-
-  <xsl:template match="@reproductionWidth">
-    <xsl:attribute name="width">
-      <xsl:value-of select="."/>
-    </xsl:attribute>
-  </xsl:template>
-
-  <xsl:template match="@reproductionHeight"/>
-
-  <xsl:template match="@reproductionScale">
-    <xsl:attribute name="scale">
-      <xsl:value-of select="."/>
-    </xsl:attribute>
   </xsl:template>
 
 </xsl:stylesheet>

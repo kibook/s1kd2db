@@ -34,12 +34,25 @@
   <!-- Map S1000D publication structures to DocBook ones -->
   <xsl:param name="pm.is">d:book</xsl:param>
   <xsl:param name="pmentry.is">d:part</xsl:param>
+  <!-- <part> element cannot be nested, so if you have sub-pmEntry elements,
+       you'll need to set these parameters differently. -->
+  <xsl:param name="sub.pmentry.is"/>
   <xsl:param name="dmodule.is">d:article</xsl:param>
 
   <!-- Use pmEntry as another subdivision. When set to 0, all data modules are
        displayed on the same level. If there is only one pmEntry this may be
        used to avoid having an extra level. -->
   <xsl:param name="use.pmentry">1</xsl:param>
+
+  <!-- How to generate link text.
+
+       s1000d   Generate S1000D link text (Fig 1, Table 1, Para 1, etc.).
+
+       title    Use the target element's <title> as the link text. If the
+                target has no title, S1000D link text is used instead.
+  -->
+
+  <xsl:param name="link.text">endterm</xsl:param>
 
   <xsl:include href="includes.xsl"/>
 
