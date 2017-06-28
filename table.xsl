@@ -11,7 +11,8 @@
     <xsl:choose>
       <xsl:when test="ancestor::levelledPara">   
         <d:table>
-          <xsl:copy-of select="@*"/>
+          <xsl:call-template name="unique.id.attr"/>
+          <xsl:copy-of select="@pgwide|@orient|@frame|@rowsep|@colsep"/>
           <xsl:apply-templates/>
         </d:table>
       </xsl:when>
@@ -19,12 +20,21 @@
         <d:simplesect>
           <d:title/>
           <d:table>
-            <xsl:copy-of select="@*"/>
+            <xsl:call-template name="unique.id.attr"/>
+            <xsl:copy-of select="@pgwide|@orient|@frame|@rowsep|@colsep"/>
             <xsl:apply-templates/>
           </d:table>
         </d:simplesect>
       </xsl:otherwise>
     </xsl:choose>
+  </xsl:template>
+
+  <xsl:template match="table[not(title)]">
+    <d:informaltable>
+      <xsl:call-template name="unique.id.attr"/>
+      <xsl:copy-of select="@pgwide|@orient|@frame|@rowsep|@colsep"/>
+      <xsl:apply-templates/>
+    </d:informaltable>
   </xsl:template>
 
   <xsl:template match="tgroup">
@@ -35,9 +45,9 @@
   </xsl:template>
 
   <xsl:template match="colspec">
-    <xsl:copy>
+    <d:colspec>
       <xsl:copy-of select="@*"/>
-    </xsl:copy>
+    </d:colspec>
   </xsl:template>
 
   <xsl:template match="thead">

@@ -31,6 +31,9 @@
   <xsl:param name="pmentry.db.titlereq.info">1</xsl:param>
   <xsl:param name="dmodule.db.titlereq.info">1</xsl:param>
 
+  <!-- Create sections for certain elements instead of using bridgehead. -->
+  <xsl:param name="extra.sections">0</xsl:param>
+
   <!-- Map S1000D publication structures to DocBook ones -->
   <xsl:param name="pm.is">d:book</xsl:param>
   <xsl:param name="pmentry.is">d:part</xsl:param>
@@ -51,8 +54,19 @@
        title    Use the target element's <title> as the link text. If the
                 target has no title, S1000D link text is used instead.
   -->
-
   <xsl:param name="link.text">title</xsl:param>
+
+  <!-- Detect if a referenced data module is included in a publication. If it
+       is not, don't present the dmRef as a (broken) link. Slow for large
+       publications. -->
+  <xsl:param name="smart.dmref">0</xsl:param>
+
+  <!-- Include the References table. -->
+  <xsl:param name="include.refs">0</xsl:param>
+
+  <!-- Generate unique (for the whole publication) IDs for elements in data
+       modules with IDs. The ID is prefixed by the data module identifier. -->
+  <xsl:param name="use.unique.id">1</xsl:param>
 
   <xsl:include href="includes.xsl"/>
 

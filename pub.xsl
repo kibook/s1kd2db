@@ -65,7 +65,7 @@
               </d:info>
             </xsl:otherwise>
           </xsl:choose>
-          <xsl:apply-templates select="pmEntry|dmRef"/>
+          <xsl:apply-templates select="pmEntry|dmRef|dmodule"/>
         </xsl:element>
       </xsl:otherwise>
     </xsl:choose>

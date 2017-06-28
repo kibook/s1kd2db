@@ -11,12 +11,22 @@
   </xsl:template>
 
   <xsl:template match="preliminaryRqmts">
-    <d:section>
-      <d:title>Preliminary requirements</d:title>
-      <d:taskprerequisites>
-        <xsl:apply-templates/>
-      </d:taskprerequisites>
-    </d:section>
+    <xsl:choose>
+      <xsl:when test="$extra.sections = 0">
+        <d:bridgehead>Preliminary requirements</d:bridgehead>
+        <d:taskprerequisites>
+          <xsl:apply-templates/>
+        </d:taskprerequisites>
+      </xsl:when>
+      <xsl:otherwise>
+        <d:section>
+          <d:title>Preliminary requirements</d:title>
+          <d:taskprerequisites>
+            <xsl:apply-templates/>
+          </d:taskprerequisites>
+        </d:section>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
   <xsl:template match="reqCondGroup">
@@ -69,13 +79,19 @@
   </xsl:template>
 
   <xsl:template match="reqSupportEquips|reqSupplies|reqSpares">
+    <xsl:variable name="title">
+      <xsl:choose>
+        <xsl:when test="self::reqSupportEquips">Support equipment</xsl:when>
+        <xsl:when test="self::reqSupplies">Consumables, materials, and expendables</xsl:when>
+        <xsl:when test="self::reqSpares">Spares</xsl:when>
+      </xsl:choose>
+    </xsl:variable>
+    <d:bridgehead>
+      <xsl:value-of select="$title"/>
+    </d:bridgehead>
     <d:table>
       <d:title>
-        <xsl:choose>
-          <xsl:when test="self::reqSupportEquips">Support equipment</xsl:when>
-          <xsl:when test="self::reqSupplies">Consumables, materials, and expendables</xsl:when>
-          <xsl:when test="self::reqSpares">Spares</xsl:when>
-        </xsl:choose>
+        <xsl:value-of select="$title"/>
       </d:title>
       <d:tgroup cols="4">
         <d:thead>
@@ -152,21 +168,33 @@
   </xsl:template>
 
   <xsl:template match="mainProcedure">
-    <d:section>
-      <d:title>Procedure</d:title>
-      <xsl:choose>
-        <xsl:when test="$use.procedure = 1">
-          <d:procedure>
-            <xsl:apply-templates/>
-          </d:procedure>
-        </xsl:when>
-        <xsl:otherwise>
-          <d:orderedlist>
-            <xsl:apply-templates/>
-          </d:orderedlist>
-        </xsl:otherwise>
-      </xsl:choose>
-    </d:section>
+    <xsl:choose>
+      <xsl:when test="$extra.sections = 0">
+        <d:bridgehead>Procedure</d:bridgehead>
+        <xsl:call-template name="main.procedure"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <d:section>
+          <d:title>Procedure</d:title>
+          <xsl:call-template name="main.procedure"/>
+        </d:section>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
+  <xsl:template name="main.procedure">
+    <xsl:choose>
+      <xsl:when test="$use.procedure = 1">
+        <d:procedure>
+          <xsl:apply-templates/>
+        </d:procedure>
+      </xsl:when>
+      <xsl:otherwise>
+        <d:orderedlist>
+          <xsl:apply-templates/>
+        </d:orderedlist>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
   <xsl:template match="proceduralStep">
@@ -195,12 +223,20 @@
   </xsl:template>
 
   <xsl:template match="closeRqmts">
-    <d:section>
-      <d:title>Requirements after job completion</d:title>
-      <d:taskrelated>
-        <xsl:apply-templates/>
-      </d:taskrelated>
-    </d:section>
+    <xsl:choose>
+      <xsl:when test="$extra.sections = 0">
+        <d:bridgehead>Requirements after job completion</d:bridgehead>
+        <xsl:apply-templates select="*"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <d:section>
+          <d:title>Requirements after job completion</d:title>
+          <d:taskrelated>
+            <xsl:apply-templates select="*"/>
+          </d:taskrelated>
+        </d:section>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
 </xsl:stylesheet>

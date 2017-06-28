@@ -6,29 +6,26 @@
 
   <xsl:template name="get.dmodule.id">
     <xsl:param name="dm.ref.code"/>
-    <xsl:for-each select="$all.dmodules">
-      <xsl:variable name="dm.code">
-        <xsl:call-template name="get.dmcode"/>
-      </xsl:variable>
-      <xsl:if test="$dm.ref.code = $dm.code">
-        <xsl:call-template name="unique.id"/>
-      </xsl:if>
-    </xsl:for-each>
-  </xsl:template>
-
-  <xsl:template name="get.dmodule.title">
-    <xsl:param name="dm.ref.code"/>
-    <xsl:for-each select="$all.dmodules">
-      <xsl:variable name="dm.code">
-        <xsl:call-template name="get.dmcode"/>
-      </xsl:variable>
-      <xsl:if test="$dm.ref.code = $dm.code">
-        <xsl:apply-templates select="identAndStatusSection/dmAddress/dmAddressItems/dmTitle"/>
-      </xsl:if>
-    </xsl:for-each>
+    <xsl:choose>
+      <xsl:when test="$smart.dmref = 0">
+        <xsl:text>ID_</xsl:text>
+        <xsl:value-of select="$dm.ref.code"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:for-each select="$all.dmodules">
+          <xsl:variable name="dm.code">
+            <xsl:call-template name="get.dmcode"/>
+          </xsl:variable>
+          <xsl:if test="$dm.ref.code = $dm.code">
+            <xsl:call-template name="unique.id"/>
+          </xsl:if>
+        </xsl:for-each>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
   <xsl:template match="dmRef">
+    <xsl:param name="dmref.link.text" select="$link.text"/>
     <xsl:variable name="dm.ref.code">
       <xsl:apply-templates select="dmRefIdent/dmCode"/>
     </xsl:variable>
@@ -41,10 +38,8 @@
       <xsl:when test="$id">
         <d:link linkend="{$id}">
           <xsl:choose>
-            <xsl:when test="$link.text = 'title'">
-              <xsl:call-template name="get.dmodule.title">
-                <xsl:with-param name="dm.ref.code" select="$dm.ref.code"/>
-              </xsl:call-template>
+            <xsl:when test="$dmref.link.text = 'title' and dmRefAddressItems/dmTitle">
+              <xsl:apply-templates select="dmRefAddressItems/dmTitle"/>
             </xsl:when>
             <xsl:otherwise>
               <xsl:apply-templates select="dmRefIdent"/>

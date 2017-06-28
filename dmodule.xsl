@@ -6,11 +6,18 @@
 
   <xsl:template match="dmodule">
     <xsl:element name="{$dmodule.is}">
-      <xsl:attribute name="id">
-        <xsl:call-template name="unique.id"/>
-      </xsl:attribute>
+      <xsl:call-template name="force.unique.id.attr"/>
       <xsl:apply-templates select="*"/>
     </xsl:element>
+  </xsl:template>
+
+  <xsl:template match="dmodule/content">
+    <xsl:if test="$include.refs != 0">
+      <xsl:call-template name="refs">
+        <xsl:with-param name="refs" select="refs"/>
+      </xsl:call-template>
+    </xsl:if>
+    <xsl:apply-templates select="*"/>
   </xsl:template>
 
 </xsl:stylesheet>
