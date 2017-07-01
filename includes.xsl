@@ -10,6 +10,7 @@
   <xsl:include href="emphasis.xsl"/>
   <xsl:include href="externalPubRef.xsl"/>
   <xsl:include href="figure.xsl"/>
+  <xsl:include href="footnote.xsl"/>
   <xsl:include href="id.xsl"/>
   <xsl:include href="identAndStatusSection.xsl"/>
   <xsl:include href="internalRef.xsl"/>
