@@ -6,7 +6,7 @@
 
   <xsl:template match="internalRef">
     <xsl:variable name="target.id" select="@internalRefId"/>
-    <xsl:variable name="target" select="//*[@id = $target.id]"/>
+    <xsl:variable name="target" select="ancestor::dmodule//*[@id = $target.id]"/>
     <xsl:variable name="target.type" select="@internalRefTargetType"/>
     <xsl:variable name="target.uid">
       <xsl:call-template name="unique.id">
@@ -22,79 +22,52 @@
           <xsl:apply-templates select="$target/title/node()"/>
         </xsl:when>
         <xsl:otherwise>
-          <xsl:call-template name="target.text">
-            <xsl:with-param name="target" select="$target"/>
-            <xsl:with-param name="target.type" select="$target.type"/>
-          </xsl:call-template>
+          <xsl:apply-templates select="$target" mode="internal-ref"/>
         </xsl:otherwise>
       </xsl:choose>
     </d:link>
   </xsl:template>
 
-  <xsl:template name="target.text">
-    <xsl:param name="target"/>
-    <xsl:param name="target.type"/>
-    <xsl:choose>
-      <xsl:when test="$target/shortName">
-        <xsl:apply-templates select="$target/shortName"/>
-      </xsl:when>
-      <xsl:when test="$target/name">
-        <xsl:apply-templates select="$target/name"/>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:variable name="type">
-          <xsl:choose>
-            <xsl:when test="$target.type">
-              <xsl:call-template name="target.title.by.type">
-                <xsl:with-param name="target.type" select="$target.type"/>
-              </xsl:call-template>
-            </xsl:when>
-            <xsl:otherwise>
-              <xsl:call-template name="target.title.by.element">
-                <xsl:with-param name="element" select="$target"/>
-              </xsl:call-template>
-            </xsl:otherwise>
-          </xsl:choose>
-        </xsl:variable>
-        <xsl:value-of select="$type"/>
-        <xsl:text> </xsl:text>
-        <xsl:call-template name="target.number">
-          <xsl:with-param name="type" select="$type"/>
-        </xsl:call-template>
-      </xsl:otherwise>
-    </xsl:choose>
+  <xsl:template match="table" mode="prefix">
+    <xsl:text>Table</xsl:text>
   </xsl:template>
 
-  <xsl:template name="target.title.by.type">
-    <xsl:param name="target.type"/>
-    <xsl:choose>
-      <xsl:when test="$target.type = 'irtt01'">Fig</xsl:when>
-      <xsl:when test="$target.type = 'irtt02'">Table</xsl:when>
-      <xsl:when test="$target.type = 'irtt07'">Para</xsl:when>
-      <xsl:when test="$target.type = 'irtt08'">Step</xsl:when>
-    </xsl:choose>
+  <xsl:template match="table" mode="number">
+    <xsl:number level="any" from="dmodule"/>
   </xsl:template>
 
-  <xsl:template name="target.title.by.element">
-    <xsl:param name="element"/>
-    <xsl:choose>
-      <xsl:when test="name($element) = 'figure'">Fig</xsl:when>
-      <xsl:when test="name($element) = 'table'">Table</xsl:when>
-      <xsl:when test="name($element) = 'levelledPara'">Para</xsl:when>
-      <xsl:when test="name($element) = 'proceduralStep'">Step</xsl:when>
-    </xsl:choose>
+  <xsl:template match="figure" mode="prefix">
+    <xsl:text>Fig</xsl:text>
+  </xsl:template>
+  
+  <xsl:template match="figure" mode="number">
+    <xsl:number level="any" from="dmodule"/>
   </xsl:template>
 
-  <xsl:template name="target.number">
-    <xsl:param name="type"/>
-    <xsl:choose>
-      <xsl:when test="$type = 'Fig' or $type = 'Table'">
-        <xsl:number level="any" from="dmodule"/>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:number level="multiple" from="dmodule"/>
-      </xsl:otherwise>
-    </xsl:choose>
+  <xsl:template match="proceduralStep" mode="prefix">
+    <xsl:text>Step</xsl:text>
+  </xsl:template>
+
+  <xsl:template match="proceduralStep" mode="number">
+    <xsl:number level="multiple" from="dmodule"/>
+  </xsl:template>
+
+  <xsl:template match="levelledPara" mode="prefix">
+    <xsl:text>Para</xsl:text>
+  </xsl:template>
+
+  <xsl:template match="levelledPara" mode="number">
+    <xsl:number level="multiple" from="dmodule"/>
+  </xsl:template>
+
+  <xsl:template match="*" mode="internal-ref">
+    <xsl:apply-templates select="." mode="prefix"/>
+    <xsl:text> </xsl:text>
+    <xsl:apply-templates select="." mode="number"/>
+  </xsl:template>
+
+  <xsl:template match="supportEquipDescr|supplyDescr|spareDescr" mode="internal-ref">
+    <xsl:apply-templates select="(shortName|name)[1]"/>
   </xsl:template>
 
 </xsl:stylesheet>

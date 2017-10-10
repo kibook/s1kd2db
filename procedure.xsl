@@ -78,6 +78,19 @@
     </d:para>
   </xsl:template>
 
+  <xsl:template match="reqCondDm">
+    <d:row>
+      <d:entry>
+        <xsl:apply-templates select="reqCond"/>
+      </d:entry>
+      <d:entry>
+        <d:para>
+          <xsl:apply-templates select="dmRef"/>
+        </d:para>
+      </d:entry>
+    </d:row>
+  </xsl:template>
+
   <xsl:template match="reqSupportEquips|reqSupplies|reqSpares">
     <xsl:variable name="title">
       <xsl:choose>
@@ -135,6 +148,39 @@
   </xsl:template>
 
   <xsl:template match="supportEquipDescr">
+    <d:row>
+      <d:entry>
+        <d:para>
+          <xsl:call-template name="unique.id.attr"/>
+          <xsl:choose>
+            <xsl:when test="name">
+              <xsl:apply-templates select="name"/>
+            </xsl:when>
+            <xsl:when test="shortName">
+              <xsl:apply-templates select="shortName"/>
+            </xsl:when>
+          </xsl:choose>
+        </d:para>
+      </d:entry>
+      <d:entry>
+        <d:para>
+          <xsl:apply-templates select="identNumber"/>
+        </d:para>
+      </d:entry>
+      <d:entry>
+        <d:para>
+          <xsl:apply-templates select="reqQuantity"/>
+        </d:para>
+      </d:entry>
+      <d:entry>
+        <d:para>
+          <xsl:apply-templates select="remark"/>
+        </d:para>
+      </d:entry>
+    </d:row>
+  </xsl:template>
+
+  <xsl:template match="supplyDescr">
     <d:row>
       <d:entry>
         <d:para>

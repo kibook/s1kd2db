@@ -68,6 +68,12 @@
        modules with IDs. The ID is prefixed by the data module identifier. -->
   <xsl:param name="use.unique.id">1</xsl:param>
 
+  <xsl:param name="separate.table.graphics">0</xsl:param>
+
+  <xsl:param name="include.date">1</xsl:param>
+  <xsl:param name="include.publisher">1</xsl:param>
+  <xsl:param name="include.author">1</xsl:param>
+
   <xsl:include href="includes.xsl"/>
 
   <xsl:output method="xml"/>

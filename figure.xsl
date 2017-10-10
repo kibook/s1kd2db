@@ -6,6 +6,7 @@
 
   <xsl:template match="figure">
     <d:figure>
+      <xsl:call-template name="unique.id.attr"/>
       <xsl:apply-templates/>
     </d:figure>
   </xsl:template>

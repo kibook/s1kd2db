@@ -31,6 +31,15 @@
     </alt>
   </xsl:template>-->
 
-  <xsl:template match="acronymDefinition"/>
+
+  <xsl:template match="acronym">
+    <xsl:apply-templates select="acronymTerm"/>
+  </xsl:template>
+
+  <xsl:template match="acronymTerm">
+    <acronym>
+      <xsl:apply-templates/>
+    </acronym>
+  </xsl:template>
 
 </xsl:stylesheet>

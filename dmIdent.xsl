@@ -7,14 +7,14 @@
       <xsl:text>-</xsl:text>
     </xsl:if>
     <xsl:apply-templates select="dmCode"/>
-    <xsl:if test="issueInfo">
+    <!--<xsl:if test="issueInfo">
       <xsl:text>_</xsl:text>
       <xsl:apply-templates select="issueInfo"/>
     </xsl:if>
     <xsl:if test="language">
       <xsl:text>_</xsl:text>
       <xsl:apply-templates select="language"/>
-    </xsl:if>
+    </xsl:if>-->
   </xsl:template>
 
   <xsl:template match="identExtension">

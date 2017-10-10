@@ -13,7 +13,9 @@
         <xsl:if test="$dmodule.db.titlereq.info != 0">
           <xsl:apply-templates select="dmAddress/dmAddressItems/dmTitle" mode="idstatus"/>
         </xsl:if>
-        <xsl:apply-templates select="dmAddress/dmAddressItems/issueDate" mode="idstatus"/>
+        <xsl:if test="$include.date != 0">
+          <xsl:apply-templates select="dmAddress/dmAddressItems/issueDate" mode="idstatus"/>
+        </xsl:if>
         <xsl:apply-templates select="dmStatus" mode="idstatus"/>
       </d:info>
     </xsl:if>
@@ -54,9 +56,11 @@
   </xsl:template>
 
   <xsl:template match="responsiblePartnerCompany" mode="idstatus">
-    <d:publisher>
-      <xsl:apply-templates select="*" mode="idstatus"/>
-    </d:publisher>
+    <xsl:if test="$include.publisher != 0">
+      <d:publisher>
+        <xsl:apply-templates select="*" mode="idstatus"/>
+      </d:publisher>
+    </xsl:if>
   </xsl:template>
 
   <xsl:template match="responsiblePartnerCompany/enterpriseName" mode="idstatus">
@@ -66,9 +70,11 @@
   </xsl:template>
 
   <xsl:template match="originator" mode="idstatus">
-    <d:author>
-      <xsl:apply-templates select="*" mode="idstatus"/>
-    </d:author>
+    <xsl:if test="$include.author != 0">
+      <d:author>
+        <xsl:apply-templates select="*" mode="idstatus"/>
+      </d:author>
+    </xsl:if>
   </xsl:template>
 
   <xsl:template match="originator/enterpriseName" mode="idstatus">
