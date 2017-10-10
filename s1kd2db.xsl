@@ -74,6 +74,9 @@
   <xsl:param name="include.publisher">1</xsl:param>
   <xsl:param name="include.author">1</xsl:param>
 
+  <!-- Spell out acronyms the first time they are used (acronymDefinition) -->
+  <xsl:param name="spell.out.acronyms">1</xsl:param>
+
   <xsl:include href="includes.xsl"/>
 
   <xsl:output method="xml"/>
