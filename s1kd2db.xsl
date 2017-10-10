@@ -76,6 +76,15 @@
 
   <!-- Spell out acronyms the first time they are used (acronymDefinition) -->
   <xsl:param name="spell.out.acronyms">1</xsl:param>
+  <!-- Determines how acronyms are spelled out in the narrative if
+       $spell.out.acronyms = 1.
+
+       When $acronym.term.first = 1, the acronym term is followed by the
+       definition in parentheses. Example: XML (Extensible Markup Language)
+
+       When $acronym.term.first = 0, the acronym definition is followed by the
+       term in parentheses. Example: Extensible Markup Language (XML) -->
+  <xsl:param name="acronym.term.first">1</xsl:param>
 
   <xsl:include href="includes.xsl"/>
 
