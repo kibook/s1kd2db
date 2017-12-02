@@ -36,12 +36,12 @@
     <xsl:number level="any" from="dmodule"/>
   </xsl:template>
 
-  <xsl:template match="figure" mode="prefix">
+  <xsl:template match="figure|figureAlts" mode="prefix">
     <xsl:text>Fig</xsl:text>
   </xsl:template>
   
-  <xsl:template match="figure" mode="number">
-    <xsl:number level="any" from="dmodule"/>
+  <xsl:template match="figure|figureAlts" mode="number">
+    <xsl:number count="figure|figureAlts" level="any" from="dmodule"/>
   </xsl:template>
 
   <xsl:template match="proceduralStep" mode="prefix">

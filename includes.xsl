@@ -17,6 +17,7 @@
   <xsl:include href="issueDate.xsl"/>
   <xsl:include href="levelledPara.xsl"/>
   <xsl:include href="lists.xsl"/>
+  <xsl:include href="math.xsl"/>
   <xsl:include href="note.xsl"/>
   <xsl:include href="para.xsl"/>
   <xsl:include href="procedure.xsl"/>

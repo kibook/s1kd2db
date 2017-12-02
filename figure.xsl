@@ -40,4 +40,8 @@
     </d:inlinemediaobject>
   </xsl:template>
 
+  <xsl:template match="figureAlts">
+    <xsl:apply-templates select="figure"/>
+  </xsl:template>
+
 </xsl:stylesheet>
