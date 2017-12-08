@@ -68,11 +68,15 @@
        modules with IDs. The ID is prefixed by the data module identifier. -->
   <xsl:param name="use.unique.id">1</xsl:param>
 
+  <!-- Display graphics in CALS tables as separate mediaobjects -->
   <xsl:param name="separate.table.graphics">0</xsl:param>
 
+  <!-- Extra metadata -->
   <xsl:param name="include.date">1</xsl:param>
   <xsl:param name="include.publisher">1</xsl:param>
   <xsl:param name="include.author">1</xsl:param>
+  <xsl:param name="include.dmc">1</xsl:param>
+  <xsl:param name="include.issue.info">1</xsl:param>
 
   <!-- Spell out acronyms the first time they are used (acronymDefinition) -->
   <xsl:param name="spell.out.acronyms">1</xsl:param>
