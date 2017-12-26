@@ -90,6 +90,9 @@
        term in parentheses. Example: Extensible Markup Language (XML) -->
   <xsl:param name="acronym.term.first">1</xsl:param>
 
+  <!-- Include @role corresponding to @emphasisType. -->
+  <xsl:param name="include.emphasis.role">0</xsl:param>
+
   <xsl:include href="includes.xsl"/>
 
   <xsl:output method="xml"/>
