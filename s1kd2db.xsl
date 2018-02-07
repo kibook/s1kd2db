@@ -1203,4 +1203,77 @@
     </d:para>
   </xsl:template>
 
+  <xsl:template match="quantity">
+    <xsl:apply-templates/>
+  </xsl:template>
+
+  <xsl:template match="quantity/text()">
+    <xsl:value-of select="normalize-space()"/>
+  </xsl:template>
+
+  <xsl:template match="quantityGroup">
+    <xsl:choose>
+      <xsl:when test="@quantityGroupType='minimum'">from </xsl:when>
+      <xsl:when test="@quantityGroupType='maximum'"> to </xsl:when>
+    </xsl:choose>
+    <xsl:for-each select="quantityValue">
+      <xsl:if test="position() != 1">
+        <xsl:text> </xsl:text>
+      </xsl:if>
+      <xsl:apply-templates select="."/>
+    </xsl:for-each>
+    <xsl:if test="quantityValue and quantityTolerance">
+      <xsl:text> </xsl:text>
+    </xsl:if>
+    <xsl:for-each select="quantityTolerance">
+      <xsl:if test="position() != 1">
+        <xsl:text> </xsl:text>
+      </xsl:if>
+      <xsl:apply-templates select="."/>
+    </xsl:for-each>
+  </xsl:template>
+
+  <xsl:template match="quantityValue">
+    <xsl:value-of select="."/>
+    <xsl:apply-templates select="@quantityUnitOfMeasure"/>
+  </xsl:template>
+
+  <xsl:template match="quantityTolerance">
+    <xsl:call-template name="quantity.tolerance.type"/>
+    <xsl:value-of select="."/>
+    <xsl:apply-templates select="@quantityUnitOfMeasure"/>
+  </xsl:template>
+
+  <xsl:template name="quantity.tolerance.type">
+    <xsl:param name="type" select="@quantityToleranceType"/>
+    <xsl:choose>
+      <xsl:when test="$type = 'plus'">+</xsl:when>
+      <xsl:when test="$type = 'minus'">-</xsl:when>
+      <xsl:otherwise>± </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
+  <xsl:template match="@quantityUnitOfMeasure">
+    <xsl:choose>
+      <xsl:when test=". = '%'">%</xsl:when>
+      <xsl:when test=". = 'cm2'"> cm<d:superscript>2</d:superscript></xsl:when>
+      <xsl:when test=". = 'cm3'"> cm<d:superscript>3</d:superscript></xsl:when>
+      <xsl:when test=". = 'dega'">°</xsl:when>
+      <xsl:when test=". = 'degC'"> °C</xsl:when>
+      <xsl:when test=". = 'degF'"> °F</xsl:when>
+      <xsl:when test=". = 'ft2'"> ft<d:superscript>2</d:superscript></xsl:when>
+      <xsl:when test=". = 'ft3'"> ft<d:superscript>3</d:superscript></xsl:when>
+      <xsl:when test=". = 'in2'"> in<d:superscript>2</d:superscript></xsl:when>
+      <xsl:when test=". = 'in3'"> in<d:superscript>3</d:superscript></xsl:when>
+      <xsl:when test=". = 'km2'"> km<d:superscript>2</d:superscript></xsl:when>
+      <xsl:when test=". = 'km3'"> km<d:superscript>3</d:superscript></xsl:when>
+      <xsl:when test=". = 'm2'"> m<d:superscript>2</d:superscript></xsl:when>
+      <xsl:when test=". = 'm3'"> m<d:superscript>3</d:superscript></xsl:when>
+      <xsl:otherwise>
+        <xsl:text> </xsl:text>
+        <xsl:value-of select="."/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
 </xsl:stylesheet>
