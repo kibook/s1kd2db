@@ -95,6 +95,12 @@
   <!-- Include @role corresponding to @emphasisType. -->
   <xsl:param name="include.emphasis.role">0</xsl:param>
 
+  <!-- Include the preliminary and close requirements sections. -->
+  <xsl:param name="include.rqmts">1</xsl:param>
+
+  <!-- Include S1000D default headings as bridgeheads. -->
+  <xsl:param name="include.bridgeheads">0</xsl:param>
+
   <xsl:variable name="all.dmodules" select="//dmodule"/>
 
   <xsl:output method="xml"/>
@@ -643,14 +649,23 @@
 
   <xsl:template match="procedure">
     <d:task>
-      <xsl:apply-templates/>
+      <xsl:apply-templates select="commonInfo"/>
+      <xsl:if test="$include.rqmts != 0">
+        <xsl:apply-templates select="preliminaryRqmts"/>
+      </xsl:if>
+      <xsl:apply-templates select="mainProcedure"/>
+      <xsl:if test="$include.rqmts != 0">
+        <xsl:apply-templates select="closeRqmts"/>
+      </xsl:if>
     </d:task>
   </xsl:template>
 
   <xsl:template match="preliminaryRqmts">
     <xsl:choose>
       <xsl:when test="$extra.sections = 0">
-        <d:bridgehead>Preliminary requirements</d:bridgehead>
+        <xsl:if test="$include.bridgeheads != 0">
+          <d:bridgehead>Preliminary requirements</d:bridgehead>
+        </xsl:if>
         <d:taskprerequisites>
           <xsl:apply-templates/>
         </d:taskprerequisites>
@@ -736,9 +751,11 @@
         <xsl:when test="self::reqSpares">Spares</xsl:when>
       </xsl:choose>
     </xsl:variable>
-    <d:bridgehead>
-      <xsl:value-of select="$title"/>
-    </d:bridgehead>
+    <xsl:if test="$include.bridgeheads != 0">
+      <d:bridgehead>
+        <xsl:value-of select="$title"/>
+      </d:bridgehead>
+    </xsl:if>
     <d:table>
       <d:title>
         <xsl:value-of select="$title"/>
@@ -853,7 +870,9 @@
   <xsl:template match="mainProcedure">
     <xsl:choose>
       <xsl:when test="$extra.sections = 0">
-        <d:bridgehead>Procedure</d:bridgehead>
+        <xsl:if test="$include.bridgeheads != 0">
+          <d:bridgehead>Procedure</d:bridgehead>
+        </xsl:if>
         <xsl:call-template name="main.procedure"/>
       </xsl:when>
       <xsl:otherwise>
@@ -908,7 +927,9 @@
   <xsl:template match="closeRqmts">
     <xsl:choose>
       <xsl:when test="$extra.sections = 0">
-        <d:bridgehead>Requirements after job completion</d:bridgehead>
+        <xsl:if test="$include.bridgeheads != 0">
+          <d:bridgehead>Requirements after job completion</d:bridgehead>
+        </xsl:if>
         <xsl:apply-templates select="*"/>
       </xsl:when>
       <xsl:otherwise>
@@ -1019,7 +1040,9 @@
     <xsl:param name="refs"/>
     <xsl:choose>
       <xsl:when test="$extra.sections = 0">
-        <d:bridgehead>References</d:bridgehead>
+        <xsl:if test="$include.bridgeheads != 0">
+          <d:bridgehead>References</d:bridgehead>
+        </xsl:if>
         <xsl:call-template name="refs.table">
           <xsl:with-param name="refs" select="$refs"/>
         </xsl:call-template>
