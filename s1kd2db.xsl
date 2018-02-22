@@ -140,12 +140,24 @@
   </xsl:template>
 
   <xsl:template match="commonInfo">
-    <d:section>
-      <d:title>Common information</d:title>
-      <d:tasksummary>
-        <xsl:apply-templates/>
-      </d:tasksummary>
-    </d:section>
+    <xsl:choose>
+      <xsl:when test="$extra.sections = 0">
+        <xsl:if test="$include.bridgeheads != 0">
+          <d:bridgehead>Common information</d:bridgehead>
+        </xsl:if>
+        <d:tasksummary>
+          <xsl:apply-templates/>
+        </d:tasksummary>
+      </xsl:when>
+      <xsl:otherwise>
+        <d:section>
+          <d:title>Common information</d:title>
+          <d:tasksummary>
+            <xsl:apply-templates/>
+          </d:tasksummary>
+        </d:section>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
   <xsl:template match="commonInfoDescrPara">
