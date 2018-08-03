@@ -1,0 +1,13 @@
+#!/bin/sh
+
+dir="$(dirname "$0")/../share/xml/s1000d/stylesheet/s1kd2db"
+
+if test "$#" -lt 1
+then
+	exit 1
+fi
+
+src="$1"
+shift
+
+xsltproc --xinclude "$@" "$dir/s1kd2db.xsl" "$src"
