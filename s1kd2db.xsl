@@ -99,6 +99,9 @@
   <!-- Include the preliminary and close requirements sections. -->
   <xsl:param name="include.rqmts">1</xsl:param>
 
+  <!-- Include requirements tables even if they are empty. -->
+  <xsl:param name="include.empty.rqmts">1</xsl:param>
+
   <!-- Include S1000D default headings as bridgeheads. -->
   <xsl:param name="include.bridgeheads">0</xsl:param>
 
@@ -320,10 +323,19 @@
   </xsl:template>
 
   <xsl:template match="externalPubRefIdent">
-    <xsl:apply-templates select="externalPubTitle"/>
+    <xsl:choose>
+      <xsl:when test="externalPubTitle">
+        <xsl:apply-templates select="externalPubTitle"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:apply-templates select="externalPubCode"/>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
-  <xsl:template match="externalPubCode"/>
+  <xsl:template match="externalPubCode">
+    <xsl:apply-templates/>
+  </xsl:template>
 
   <xsl:template match="externalPubTitle">
     <xsl:apply-templates/>
@@ -695,24 +707,26 @@
   </xsl:template>
 
   <xsl:template match="reqCondGroup">
-    <d:table>
-      <d:title>Required conditions</d:title>
-      <d:tgroup cols="2">
-        <d:thead>
-          <d:row>
-            <d:entry>
-              <d:para>Action/Condition</d:para>
-            </d:entry>
-            <d:entry>
-              <d:para>Data module/Technical publication</d:para>
-            </d:entry>
-          </d:row>
-        </d:thead>
-        <d:tbody>
-          <xsl:apply-templates/>
-        </d:tbody>
-      </d:tgroup>
-    </d:table>
+    <xsl:if test="$include.empty.rqmts = 1 or not(noConds)">
+      <d:table>
+        <d:title>Required conditions</d:title>
+        <d:tgroup cols="2">
+          <d:thead>
+            <d:row>
+              <d:entry>
+                <d:para>Action/Condition</d:para>
+              </d:entry>
+              <d:entry>
+                <d:para>Data module/Technical publication</d:para>
+              </d:entry>
+            </d:row>
+          </d:thead>
+          <d:tbody>
+            <xsl:apply-templates/>
+          </d:tbody>
+        </d:tgroup>
+      </d:table>
+    </xsl:if>
   </xsl:template>
 
   <xsl:template match="noConds">
@@ -757,44 +771,46 @@
   </xsl:template>
 
   <xsl:template match="reqSupportEquips|reqSupplies|reqSpares">
-    <xsl:variable name="title">
-      <xsl:choose>
-        <xsl:when test="self::reqSupportEquips">Support equipment</xsl:when>
-        <xsl:when test="self::reqSupplies">Consumables, materials, and expendables</xsl:when>
-        <xsl:when test="self::reqSpares">Spares</xsl:when>
-      </xsl:choose>
-    </xsl:variable>
-    <xsl:if test="$include.bridgeheads != 0">
-      <d:bridgehead>
-        <xsl:value-of select="$title"/>
-      </d:bridgehead>
+    <xsl:if test="$include.empty.rqmts != 0 or not(noSupportEquips|noSupplies|noSpares)">
+      <xsl:variable name="title">
+        <xsl:choose>
+          <xsl:when test="self::reqSupportEquips">Support equipment</xsl:when>
+          <xsl:when test="self::reqSupplies">Consumables, materials, and expendables</xsl:when>
+          <xsl:when test="self::reqSpares">Spares</xsl:when>
+        </xsl:choose>
+      </xsl:variable>
+      <xsl:if test="$include.bridgeheads != 0">
+        <d:bridgehead>
+          <xsl:value-of select="$title"/>
+        </d:bridgehead>
+      </xsl:if>
+      <d:table>
+        <d:title>
+          <xsl:value-of select="$title"/>
+        </d:title>
+        <d:tgroup cols="4">
+          <d:thead>
+            <d:row>
+              <d:entry>
+                <d:para>Name/Alternate name</d:para>
+              </d:entry>
+              <d:entry>
+                <d:para>Identification/Reference</d:para>
+              </d:entry>
+              <d:entry>
+                <d:para>Quantity</d:para>
+              </d:entry>
+              <d:entry>
+                <d:para>Remark</d:para>
+              </d:entry>
+            </d:row>
+          </d:thead>
+          <d:tbody>
+            <xsl:apply-templates/>
+          </d:tbody>
+        </d:tgroup>
+      </d:table>
     </xsl:if>
-    <d:table>
-      <d:title>
-        <xsl:value-of select="$title"/>
-      </d:title>
-      <d:tgroup cols="4">
-        <d:thead>
-          <d:row>
-            <d:entry>
-              <d:para>Name/Alternate name</d:para>
-            </d:entry>
-            <d:entry>
-              <d:para>Identification/Reference</d:para>
-            </d:entry>
-            <d:entry>
-              <d:para>Quantity</d:para>
-            </d:entry>
-            <d:entry>
-              <d:para>Remark</d:para>
-            </d:entry>
-          </d:row>
-        </d:thead>
-        <d:tbody>
-          <xsl:apply-templates/>
-        </d:tbody>
-      </d:tgroup>
-    </d:table>
   </xsl:template>
 
   <xsl:template match="noSupportEquips|noSupplies|noSpares">
