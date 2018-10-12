@@ -916,6 +916,7 @@
     <xsl:choose>
       <xsl:when test="$use.procedure = 1">
         <d:step>
+          <xsl:call-template name="unique.id.attr"/>
           <xsl:apply-templates select="*[not(self::proceduralStep)]"/>
           <xsl:if test="proceduralStep">
             <d:substeps>
@@ -926,6 +927,7 @@
       </xsl:when>
       <xsl:otherwise>
         <d:listitem>
+          <xsl:call-template name="unique.id.attr"/>
           <xsl:apply-templates select="*[not(self::proceduralStep)]"/>
           <xsl:if test="proceduralStep">
             <d:orderedlist>
