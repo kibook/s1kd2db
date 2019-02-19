@@ -351,18 +351,27 @@
   <xsl:template name="image.object">
     <d:imageobject>
       <d:imagedata fileref="{unparsed-entity-uri(@infoEntityIdent)}">
-        <xsl:if test="@reproductionWidth">
-          <xsl:attribute name="width">
-            <xsl:value-of select="@reproductionWidth"/>
-          </xsl:attribute>
-        </xsl:if>
-        <xsl:if test="@reproductionScale">
-          <xsl:attribute name="scale">
-            <xsl:value-of select="@reproductionScale"/>
-          </xsl:attribute>
-        </xsl:if>
+        <xsl:apply-templates select="@reproductionWidth|@reproductionHeight|@reproductionScale"/>
       </d:imagedata>
     </d:imageobject>
+  </xsl:template>
+
+  <xsl:template match="@reproductionHeight">
+    <xsl:attribute name="depth">
+      <xsl:value-of select="."/>
+    </xsl:attribute>
+  </xsl:template>
+
+  <xsl:template match="@reproductionScale">
+    <xsl:attribute name="scale">
+      <xsl:value-of select="."/>
+    </xsl:attribute>
+  </xsl:template>
+
+  <xsl:template match="@reproductionWidth">
+    <xsl:attribute name="width">
+      <xsl:value-of select="."/>
+    </xsl:attribute>
   </xsl:template>
 
   <xsl:template match="graphic">
