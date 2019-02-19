@@ -692,40 +692,54 @@
           <d:bridgehead>Preliminary requirements</d:bridgehead>
         </xsl:if>
         <d:taskprerequisites>
-          <xsl:apply-templates/>
+          <xsl:apply-templates select="*"/>
         </d:taskprerequisites>
       </xsl:when>
       <xsl:otherwise>
         <d:section>
           <d:title>Preliminary requirements</d:title>
           <d:taskprerequisites>
-            <xsl:apply-templates/>
+            <xsl:apply-templates select="*"/>
           </d:taskprerequisites>
         </d:section>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
 
+  <xsl:template name="req.cond.group.table">
+    <d:table>
+      <d:title>Required conditions</d:title>
+      <d:tgroup cols="2">
+        <d:thead>
+          <d:row>
+            <d:entry>
+              <d:para>Action/Condition</d:para>
+            </d:entry>
+            <d:entry>
+              <d:para>Data module/Technical publication</d:para>
+            </d:entry>
+          </d:row>
+        </d:thead>
+        <d:tbody>
+          <xsl:apply-templates select="*"/>
+        </d:tbody>
+      </d:tgroup>
+    </d:table>
+  </xsl:template>
+
   <xsl:template match="reqCondGroup">
     <xsl:if test="$include.empty.rqmts = 1 or not(noConds)">
-      <d:table>
-        <d:title>Required conditions</d:title>
-        <d:tgroup cols="2">
-          <d:thead>
-            <d:row>
-              <d:entry>
-                <d:para>Action/Condition</d:para>
-              </d:entry>
-              <d:entry>
-                <d:para>Data module/Technical publication</d:para>
-              </d:entry>
-            </d:row>
-          </d:thead>
-          <d:tbody>
-            <xsl:apply-templates/>
-          </d:tbody>
-        </d:tgroup>
-      </d:table>
+      <xsl:choose>
+        <xsl:when test="$extra.sections = 0">
+          <xsl:call-template name="req.cond.group.table"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <d:section>
+            <d:title>Required conditions</d:title>
+            <xsl:call-template name="req.cond.group.table"/>
+          </d:section>
+        </xsl:otherwise>
+      </xsl:choose>
     </xsl:if>
   </xsl:template>
 
@@ -743,7 +757,7 @@
   <xsl:template match="reqCondNoRef">
     <d:row>
       <d:entry>
-        <xsl:apply-templates/>
+        <xsl:apply-templates select="*"/>
       </d:entry>
       <d:entry>
         <d:para/>
@@ -784,33 +798,54 @@
           <xsl:value-of select="$title"/>
         </d:bridgehead>
       </xsl:if>
-      <d:table>
-        <d:title>
-          <xsl:value-of select="$title"/>
-        </d:title>
-        <d:tgroup cols="4">
-          <d:thead>
-            <d:row>
-              <d:entry>
-                <d:para>Name/Alternate name</d:para>
-              </d:entry>
-              <d:entry>
-                <d:para>Identification/Reference</d:para>
-              </d:entry>
-              <d:entry>
-                <d:para>Quantity</d:para>
-              </d:entry>
-              <d:entry>
-                <d:para>Remark</d:para>
-              </d:entry>
-            </d:row>
-          </d:thead>
-          <d:tbody>
-            <xsl:apply-templates/>
-          </d:tbody>
-        </d:tgroup>
-      </d:table>
+      <xsl:choose>
+        <xsl:when test="$extra.sections = 0">
+          <xsl:call-template name="req.sss.table">
+            <xsl:with-param name="title" select="$title"/>
+          </xsl:call-template>
+        </xsl:when>
+        <xsl:otherwise>
+          <d:section>
+            <d:title>
+              <xsl:value-of select="$title"/>
+            </d:title>
+            <xsl:call-template name="req.sss.table">
+              <xsl:with-param name="title" select="$title"/>
+            </xsl:call-template>
+          </d:section>
+        </xsl:otherwise>
+      </xsl:choose>
     </xsl:if>
+  </xsl:template>
+
+  <xsl:template name="req.sss.table">
+    <xsl:param name="title"/>
+    <d:table>
+      <d:title>
+        <xsl:value-of select="$title"/>
+      </d:title>
+      <d:tgroup cols="4">
+        <d:thead>
+          <d:row>
+            <d:entry>
+              <d:para>Name/Alternate name</d:para>
+            </d:entry>
+            <d:entry>
+              <d:para>Identification/Reference</d:para>
+            </d:entry>
+            <d:entry>
+              <d:para>Quantity</d:para>
+            </d:entry>
+            <d:entry>
+              <d:para>Remark</d:para>
+            </d:entry>
+          </d:row>
+        </d:thead>
+        <d:tbody>
+          <xsl:apply-templates/>
+        </d:tbody>
+      </d:tgroup>
+    </d:table>
   </xsl:template>
 
   <xsl:template match="noSupportEquips|noSupplies|noSpares">
@@ -944,6 +979,7 @@
       <xsl:otherwise>
         <d:listitem>
           <xsl:call-template name="unique.id.attr"/>
+          <xsl:apply-templates select="@applicRefId"/>
           <xsl:apply-templates select="*[not(self::proceduralStep)]"/>
           <xsl:if test="proceduralStep">
             <d:orderedlist>
@@ -972,6 +1008,27 @@
         </d:section>
       </xsl:otherwise>
     </xsl:choose>
+  </xsl:template>
+
+  <xsl:template match="reqSafety">
+    <xsl:choose>
+      <xsl:when test="$extra.sections = 0">
+        <xsl:if test="$include.bridgeheads != 0">
+          <d:bridgehead>Safety conditions</d:bridgehead>
+        </xsl:if>
+        <xsl:apply-templates select="*"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <d:section>
+          <d:title>Safety conditions</d:title>
+          <xsl:apply-templates select="*"/>
+        </d:section>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
+  <xsl:template match="noSafety">
+    <para>None</para>
   </xsl:template>
 
   <xsl:template name="get.dmcode">
@@ -1328,6 +1385,20 @@
         <xsl:value-of select="."/>
       </xsl:otherwise>
     </xsl:choose>
+  </xsl:template>
+
+  <xsl:template match="@applicRefId">
+    <xsl:variable name="id" select="."/>
+    <xsl:apply-templates select="//*[@id = $id]"/>
+  </xsl:template>
+
+  <xsl:template match="applic">
+    <para>
+      <emphasis role="bold">
+        <xsl:text>Applicable to: </xsl:text>
+        <xsl:apply-templates select="displayText/simplePara/text()"/>
+      </emphasis>
+    </para>
   </xsl:template>
 
 </xsl:stylesheet>
