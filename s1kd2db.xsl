@@ -82,7 +82,7 @@
   <xsl:param name="include.issue.info">1</xsl:param>
 
   <!-- Spell out acronyms the first time they are used (acronymDefinition) -->
-  <xsl:param name="spell.out.acronyms">0</xsl:param>
+  <xsl:param name="spell.out.acronyms">1</xsl:param>
   <!-- Determines how acronyms are spelled out in the narrative if
        $spell.out.acronyms = 1.
 
@@ -91,7 +91,7 @@
 
        When $acronym.term.first = 0, the acronym definition is followed by the
        term in parentheses. Example: Extensible Markup Language (XML) -->
-  <xsl:param name="acronym.term.first">1</xsl:param>
+  <xsl:param name="acronym.term.first">0</xsl:param>
 
   <!-- Include @role corresponding to @emphasisType. -->
   <xsl:param name="include.emphasis.role">0</xsl:param>
