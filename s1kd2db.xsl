@@ -82,7 +82,7 @@
   <xsl:param name="include.issue.info">1</xsl:param>
 
   <!-- Spell out acronyms the first time they are used (acronymDefinition) -->
-  <xsl:param name="spell.out.acronyms">1</xsl:param>
+  <xsl:param name="spell.out.acronyms">0</xsl:param>
   <!-- Determines how acronyms are spelled out in the narrative if
        $spell.out.acronyms = 1.
 
