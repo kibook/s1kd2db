@@ -1327,25 +1327,12 @@
     <xsl:apply-templates/>
   </xsl:template>
 
-  <xsl:template match="quantity/text()">
-    <xsl:value-of select="normalize-space()"/>
-  </xsl:template>
-
   <xsl:template match="quantityGroup">
     <xsl:choose>
       <xsl:when test="@quantityGroupType='minimum'">from </xsl:when>
       <xsl:when test="@quantityGroupType='maximum'"> to </xsl:when>
     </xsl:choose>
-    <xsl:for-each select="quantityValue">
-      <xsl:if test="position() != 1">
-        <xsl:text> </xsl:text>
-      </xsl:if>
-      <xsl:apply-templates select="."/>
-    </xsl:for-each>
-    <xsl:if test="quantityValue and quantityTolerance">
-      <xsl:text> </xsl:text>
-    </xsl:if>
-    <xsl:for-each select="quantityTolerance">
+    <xsl:for-each select="quantityValue|quantityTolerance">
       <xsl:if test="position() != 1">
         <xsl:text> </xsl:text>
       </xsl:if>
@@ -1408,6 +1395,18 @@
         <xsl:apply-templates select="displayText/simplePara/text()"/>
       </emphasis>
     </para>
+  </xsl:template>
+
+  <xsl:template match="superScript">
+    <d:superscript>
+      <xsl:apply-templates/>
+    </d:superscript>
+  </xsl:template>
+
+  <xsl:template match="subScript">
+    <d:subscript>
+      <xsl:apply-templates/>
+    </d:subscript>
   </xsl:template>
 
 </xsl:stylesheet>
