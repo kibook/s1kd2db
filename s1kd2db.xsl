@@ -105,6 +105,9 @@
   <!-- Include S1000D default headings as bridgeheads. -->
   <xsl:param name="include.bridgeheads">0</xsl:param>
 
+  <!-- Role used for emphasizing applicability annotations. -->
+  <xsl:param name="applic.emphasis.role"></xsl:param>
+
   <xsl:variable name="all.dmodules" select="//dmodule"/>
 
   <xsl:output method="xml"/>
@@ -1000,6 +1003,23 @@
     </xsl:choose>
   </xsl:template>
 
+  <xsl:template match="proceduralStep/title">
+    <xsl:choose>
+      <xsl:when test="$use.procedure = 1">
+        <d:title>
+          <xsl:apply-templates/>
+        </d:title>
+      </xsl:when>
+      <xsl:otherwise>
+        <d:para>
+          <d:emphasis role="bold">
+            <xsl:apply-templates/>
+          </d:emphasis>
+        </d:para>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
   <xsl:template match="closeRqmts">
     <xsl:choose>
       <xsl:when test="$extra.sections = 0">
@@ -1075,7 +1095,7 @@
            but no value for the sub.pmentry.is parameter was set (pmentry.is
            default is <part> which cannot be nested). -->
       <xsl:when test="$use.pmentry = 0 or (parent::pmEntry and not ($sub.pmentry.is))">
-        <xsl:apply-templates select="pmEntry|dmRef"/>
+        <xsl:apply-templates select="pmEntry|dmRef|dmodule"/>
       </xsl:when>
       <xsl:otherwise>
         <xsl:variable name="name">
@@ -1390,7 +1410,7 @@
 
   <xsl:template match="applic">
     <para>
-      <emphasis role="bold">
+      <emphasis role="{$applic.emphasis.role}">
         <xsl:text>Applicable to: </xsl:text>
         <xsl:apply-templates select="displayText/simplePara/text()"/>
       </emphasis>
